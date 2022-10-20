@@ -1,0 +1,30 @@
+$main: #03e9f4;
+
+@mixin buttonStyle($fontSize) {
+    padding: 10px 20px;
+    color: #03e9f4;
+    text-decoration: none;
+    background:transparent;
+    border: none;
+    font-size: $fontSize;
+    &:hover{
+        color: #fff;
+        border-radius: 5px;
+        background-color: $main;
+        box-shadow: 0 0 5px $main,
+        0 0 25px $main,
+        0 0 100px $main;
+    }
+}
+
+@mixin ipad {
+    @media (max-width:768px) {
+        @content
+    }
+}
+
+@mixin iphone {
+    @media (max-width:568px) {
+        @content
+    }
+}
