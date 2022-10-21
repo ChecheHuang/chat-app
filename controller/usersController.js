@@ -8,7 +8,7 @@ module.exports.register = async (req, res, next) => {
       [[userName, password]]
     );
     if (insertResult.affectedRows === 1){
-        res.json({ status: "success" })
+        res.json({ status: "success",data:{userName,password} })
     }else{
         res.json({ status: "error",message:"名稱已經存在" });
     } ;
