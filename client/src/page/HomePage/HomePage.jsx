@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import './homePage.scss'
-import { registerRoute } from '../../utils/APIRoutes'
+import { registerRoute, loginRoute } from '../../utils/APIRoutes'
 import axios from 'axios'
 import {
   MdAccountCircle,
@@ -27,13 +27,17 @@ const toastOption = {
 function HomePage() {
   const [isLoginStatus, setIsLoginStatus] = useState(true)
   const [registerInfo, setRegisterInfo] = useState({
-    userName: '',
-    password: '',
-    confirmPassword: '',
+    userName: 'test',
+    password: '123',
+    confirmPassword: '123',
+  })
+  const [loginInfo, setLoginInfo] = useState({
+    userName: 'test',
+    password: '123',
   })
   const dispatch = useDispatch()
   const { pending, error } = useSelector((state) => state.user)
-  async function handleRegister() {
+  const handleRegister = async () => {
     if (!handleValid()) return
     try {
       dispatch(updateStart())
@@ -54,6 +58,15 @@ function HomePage() {
       dispatch(updateError())
     }
   }
+  const handleLogin = async () => {
+    if (!handleLoginValid()) return
+
+    const loginResult = await axios.post(loginRoute, loginInfo)
+    console.log(loginResult.data)
+  }
+  function handleLoginValid() {
+    return true
+  }
   function handleValid() {
     const { userName, password, confirmPassword } = registerInfo
 
@@ -72,7 +85,6 @@ function HomePage() {
     }
     return true
   }
-
   function handleChangeRegister() {
     setIsLoginStatus(false)
   }
@@ -99,20 +111,36 @@ function HomePage() {
           <h2>Login</h2>
           <form action="">
             <div className="inputBox">
-              <input type="text" required="required" />
+              <input
+                onChange={(e) => {
+                  setLoginInfo({ ...loginInfo, userName: e.target.value })
+                }}
+                value={loginInfo.userName}
+                type="text"
+                required="required"
+              />
               <label>
                 <MdAccountCircle />
                 名稱
               </label>
             </div>
             <div className="inputBox">
-              <input type="text" required="required" />
+              <input
+                onChange={(e) => {
+                  setLoginInfo({ ...loginInfo, password: e.target.value })
+                }}
+                value={loginInfo.password}
+                type="text"
+                required="required"
+              />
               <label>
                 <MdPassword />
                 密碼
               </label>
             </div>
-            <button type="button">登入</button>
+            <button onClick={handleLogin} type="button">
+              登入
+            </button>
           </form>
           <div className="turn">
             還沒有註冊嗎~馬上去註冊

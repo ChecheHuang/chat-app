@@ -18,6 +18,29 @@ module.exports.register = async (req, res, next) => {
 };
 
 module.exports.login = async (req, res, next) => {
-  let queryResults = await connection.queryAsync("SELECT * FROM users;");
-  res.json(queryResults);
+  console.log(req.body)
+  try {
+    let updateResult = await connection.queryAsync(
+      "UPDATE  users SET isOnline = 1 WHERE userName = ?",
+      [[req.body.userName]]
+    );
+    if(updateResult.affectedRows===1){
+      console.log("登入成功")
+  res.json({status:"success"})
+
+    }else{
+      console.log("登入失敗")
+  res.json({status:"error"})
+
+    }
+  } catch (err) {
+    next(err);
+  }
+ 
 };
+
+module.exports.logout = async (req, res, next) => {
+  
+ 
+};
+

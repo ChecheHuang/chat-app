@@ -1,8 +1,8 @@
 import React from 'react'
 import './app.scss'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Page1 from './page/Page1'
 import HomePage from './page/HomePage/HomePage'
+import Chat from './page/Chat/Chat'
 function App() {
   return (
     <Router>
@@ -18,7 +18,7 @@ function App() {
       </section>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/page1" element={<Page1 />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </Router>
   )
