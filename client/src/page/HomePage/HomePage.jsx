@@ -13,7 +13,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import Lottie from 'lottie-react'
 import loading from './chat.json'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateStart, updateSuccess, updateError } from './userSlice'
+import { updateStart, updateSuccess, updateError } from '../../redux/userSlice'
+import { useNavigate } from 'react-router-dom'
 const toastOption = {
   position: 'top-left',
   autoClose: 2000,
@@ -35,6 +36,7 @@ function HomePage() {
     userName: 'test',
     password: '123',
   })
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { pending, error } = useSelector((state) => state.user)
   const handleRegister = async () => {
@@ -47,6 +49,11 @@ function HomePage() {
         setTimeout(() => {
           dispatch(updateSuccess(result.data.data.userName))
           toast.success('註冊成功', toastOption)
+          handleChangeLogin()
+          setLoginInfo({
+            userName: registerInfo.userName,
+            password: registerInfo.password,
+          })
         }, 1000)
       } else {
         setTimeout(() => {
@@ -62,7 +69,12 @@ function HomePage() {
     if (!handleLoginValid()) return
 
     const loginResult = await axios.post(loginRoute, loginInfo)
-    console.log(loginResult.data)
+    console.log(loginResult.data.status)
+    if (loginResult.data.status === 'error') {
+      toast.error('登入失敗', toastOption)
+      return
+    }
+    navigate('/chat')
   }
   function handleLoginValid() {
     return true
