@@ -48,3 +48,16 @@ module.exports.logout = async (req, res, next) => {
     next(err);
   }
 };
+module.exports.sendMessage = async (req, res, next) => {
+  console.log(req.body);
+  const {sender,receiver,message}=req.body
+  try {
+    let insertResult = await connection.queryAsync(
+      "INSERT IGNORE INTO `message`( `sender`, `receiver`, `message`) VALUES (?)",
+      [[sender, receiver,message]]
+    );
+    res.json({"status":"success"})
+  } catch (err) {
+    next(err);
+  }
+};

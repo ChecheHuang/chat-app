@@ -4,6 +4,8 @@ import { io } from 'socket.io-client'
 import { ws } from '../../utils/APIRoutes'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
+import axios from 'axios'
+import { sendMessageRoute } from '../../utils/APIRoutes'
 function Chat() {
   const { user } = useSelector((state) => state.user)
   const scrollRef = useRef()
@@ -21,7 +23,12 @@ function Chat() {
     { sender: 'Carl', receiver: 'Test', message: 'testtest', time: '16:20' },
   ])
   useEffect(() => {
-    scrollRef?.current.scrollIntoView()
+    // scrollRef?.current.scrollIntoView()
+    const conversation = document.getElementById('conversation')
+    conversation.scrollTo({
+      top: conversation.scrollHeight,
+      behavior: 'smooth',
+    })
   }, [messages])
 
   useEffect(() => {
@@ -30,16 +37,15 @@ function Chat() {
   useEffect(() => {
     socket?.emit('addUser', user)
     socket?.on('getUsers', (users) => {
-      console.log(users)
+      // console.log(users)
     })
   }, [socket])
 
   function handleChangeMessage(e) {
     setMessage(e.target.value)
   }
-  function handleSendMessage() {
+  async function handleSendMessage() {
     if (message === '') return
-    console.log(message)
     const newMessage = {
       sender: user,
       receiver: receiver,
@@ -47,7 +53,10 @@ function Chat() {
       time: moment().format('lll'),
     }
     setMessages([...messages, newMessage])
-    setMessage('')
+    const result = await axios.post(sendMessageRoute, newMessage)
+    console.log(result)
+
+    // setMessage('')
   }
   function handleChangeReceiver(name) {
     setReceiver(name)
@@ -75,12 +84,11 @@ function Chat() {
           <div className="name">{user}</div>
           <button>登出</button>
         </div>
-        <div className="conversation">
+        <div id="conversation" ref={scrollRef} className="conversation">
           {messages.map((item, index) => {
             const { sender, receiver, message, time } = item
             return (
               <div
-                ref={scrollRef}
                 key={index}
                 className={
                   sender === user ? 'messageGroup own' : 'messageGroup'

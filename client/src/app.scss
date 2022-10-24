@@ -22,7 +22,7 @@ section {
     background: url(https://images.pexels.com/photos/3573603/pexels-photo-3573603.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
     background-position-x: center;
     background-size: cover;
-    // animation: animateBg 50s linear infinite;
+    animation: animateBg 50s linear infinite;
     z-index: -1;
 
     @keyframes animateBg {
