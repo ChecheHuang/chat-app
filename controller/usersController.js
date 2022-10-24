@@ -61,3 +61,16 @@ module.exports.sendMessage = async (req, res, next) => {
     next(err);
   }
 };
+module.exports.getMessages = async (req, res, next) => {
+  console.log(req.body);
+  const {sender,receiver,message}=req.body
+  try {
+    let getMessages = await connection.queryAsync(
+      "SELECT sender,receiver,message,createTime FROM message WHERE sender = ? and receiver = ?",
+      [[sender, receiver]]
+    );
+    res.json({"status":"success"})
+  } catch (err) {
+    next(err);
+  }
+};
