@@ -48,29 +48,4 @@ module.exports.logout = async (req, res, next) => {
     next(err);
   }
 };
-module.exports.sendMessage = async (req, res, next) => {
-  console.log(req.body);
-  const {sender,receiver,message}=req.body
-  try {
-    let insertResult = await connection.queryAsync(
-      "INSERT IGNORE INTO `message`( `sender`, `receiver`, `message`) VALUES (?)",
-      [[sender, receiver,message]]
-    );
-    res.json({"status":"success"})
-  } catch (err) {
-    next(err);
-  }
-};
-module.exports.getMessages = async (req, res, next) => {
-  console.log(req.body);
-  const {sender,receiver,message}=req.body
-  try {
-    let getMessages = await connection.queryAsync(
-      "SELECT sender,receiver,message,createTime FROM message WHERE sender = ? and receiver = ?",
-      [[sender, receiver]]
-    );
-    res.json({"status":"success"})
-  } catch (err) {
-    next(err);
-  }
-};
+

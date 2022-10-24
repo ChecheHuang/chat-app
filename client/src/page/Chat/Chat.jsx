@@ -5,14 +5,17 @@ import { ws } from '../../utils/APIRoutes'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
 import axios from 'axios'
-import { sendMessageRoute } from '../../utils/APIRoutes'
+import { sendMessageRoute, getMessagesRoute } from '../../utils/APIRoutes'
 function Chat() {
   const { user } = useSelector((state) => state.user)
   const scrollRef = useRef()
   const [socket, setSocket] = useState(null)
   const [message, setMessage] = useState('')
-  const [receiver, setReceiver] = useState('Carl')
-  const [userList, setUserList] = useState(['Carl', 'Allen'])
+  const [receiver, setReceiver] = useState({ socketId: '123', user: 'Carl' })
+  const [userList, setUserList] = useState([
+    { socketId: '123', user: 'Carl' },
+    { socketId: '1234', user: 'Allen' },
+  ])
   const [messages, setMessages] = useState([
     {
       sender: 'test',
@@ -23,7 +26,6 @@ function Chat() {
     { sender: 'Carl', receiver: 'Test', message: 'testtest', time: '16:20' },
   ])
   useEffect(() => {
-    // scrollRef?.current.scrollIntoView()
     const conversation = document.getElementById('conversation')
     conversation.scrollTo({
       top: conversation.scrollHeight,
@@ -37,9 +39,21 @@ function Chat() {
   useEffect(() => {
     socket?.emit('addUser', user)
     socket?.on('getUsers', (users) => {
-      // console.log(users)
+      setUserList(users.filter((item) => item.user !== user))
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket])
+  useEffect(() => {
+    ;(async function () {
+      const data = {
+        sender: user,
+        receiver: receiver.user,
+      }
+      const result = await axios.post(getMessagesRoute, data)
+      setMessages(result.data.data)
+    })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [receiver])
 
   function handleChangeMessage(e) {
     setMessage(e.target.value)
@@ -48,33 +62,36 @@ function Chat() {
     if (message === '') return
     const newMessage = {
       sender: user,
-      receiver: receiver,
+      receiver: receiver.user,
       message: message,
-      time: moment().format('lll'),
+      time: moment().format('YYYY/MM/DD HH:mm:ss'),
     }
     setMessages([...messages, newMessage])
-    const result = await axios.post(sendMessageRoute, newMessage)
-    console.log(result)
-
+    await axios.post(sendMessageRoute, {
+      ...newMessage,
+      socketId: receiver.socketId,
+    })
+    // console.log(result)
     // setMessage('')
   }
-  function handleChangeReceiver(name) {
-    setReceiver(name)
+  function handleChangeReceiver(item) {
+    setReceiver(item)
   }
 
   return (
     <div className="chat">
       <div className="userList">
-        {userList.map((name, index) => {
+        {userList.map((item, index) => {
+          const { user } = item
           return (
             <div
               onClick={() => {
-                handleChangeReceiver(name)
+                handleChangeReceiver(item)
               }}
-              className={name === receiver ? 'active' : ''}
+              className={user === receiver.user ? 'active' : ''}
               key={index}
             >
-              {name}
+              {user}
             </div>
           )
         })}
@@ -86,7 +103,7 @@ function Chat() {
         </div>
         <div id="conversation" ref={scrollRef} className="conversation">
           {messages.map((item, index) => {
-            const { sender, receiver, message, time } = item
+            const { sender, message, time } = item
             return (
               <div
                 key={index}
