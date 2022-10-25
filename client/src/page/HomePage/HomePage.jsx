@@ -28,13 +28,13 @@ const toastOption = {
 function HomePage() {
   const [isLoginStatus, setIsLoginStatus] = useState(true)
   const [registerInfo, setRegisterInfo] = useState({
-    userName: 'Carl',
-    password: '123',
-    confirmPassword: '123',
+    userName: '',
+    password: '',
+    confirmPassword: '',
   })
   const [loginInfo, setLoginInfo] = useState({
-    userName: 'Carl',
-    password: '123',
+    userName: '',
+    password: '',
   })
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -143,7 +143,7 @@ function HomePage() {
                   setLoginInfo({ ...loginInfo, password: e.target.value })
                 }}
                 value={loginInfo.password}
-                type="text"
+                type="password"
                 required="required"
               />
               <label>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import './chat.scss'
 import { io } from 'socket.io-client'
 import { ws } from '../../utils/APIRoutes'
@@ -6,9 +6,11 @@ import { useSelector } from 'react-redux'
 import moment from 'moment'
 import axios from 'axios'
 import { getMessagesRoute } from '../../utils/APIRoutes'
+import { useNavigate } from 'react-router-dom'
+
 function Chat() {
   const { user } = useSelector((state) => state.user)
-  const scrollRef = useRef()
+  const navigate = useNavigate()
   const [socket, setSocket] = useState(null)
   const [message, setMessage] = useState('')
   const [receiver, setReceiver] = useState({})
@@ -23,17 +25,17 @@ function Chat() {
   }, [messages])
 
   useEffect(() => {
+    if (user === '') {
+      navigate(-1)
+    }
     setSocket(io(ws))
   }, [])
   useEffect(() => {
     socket?.emit('addUser', user)
     socket?.on('getUsers', (users) => {
-      // console.log('getUsers', users)
-
       setUserList(users.filter((item) => item.user !== user))
     })
     socket?.on('getMessage', (item) => {
-      console.log('getMessage', item)
       setMessages((prev) => {
         return [...prev, item]
       })
@@ -98,9 +100,9 @@ function Chat() {
         <div className="messageArea">
           <div className="header">
             <div className="name">{user}</div>
-            <button>登出</button>
+            <a href="./">登出</a>
           </div>
-          <div id="conversation" ref={scrollRef} className="conversation">
+          <div id="conversation" className="conversation">
             {messages.map((item, index) => {
               const { sender, message, time } = item
               return (

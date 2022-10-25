@@ -1,7 +1,7 @@
 const connection = require("../utils/db");
 
-let users = [{socketId:"123",user:"Carl"},{socketId:"1234",user:"Allen"}];
-// let users = [];
+// let users = [{socketId:"123",user:"Carl"},{socketId:"1234",user:"Allen"}];
+let users = [];
 const addUser = (user, socketId) => {
   !users.some((user) => user.user === user) && users.push({ user, socketId });
 };
@@ -29,7 +29,7 @@ module.exports.socket = function (io) {
       const { sender, receiver, message, socketId } = item;
       insertMessage(sender, receiver, message);
       io.to(socketId).emit("getMessage", item);
-      console.log("sendMessage", item);
+      // console.log("sendMessage", item);
     });
     socket.on("disconnect", (e) => {
       console.log("user disconnected ", socket.id);
@@ -39,14 +39,14 @@ module.exports.socket = function (io) {
   });
 }; 
 module.exports.getMessages = async (req, res, next) => {
-  console.log("getMessages", req.body);
+  // console.log("getMessages", req.body);
   const { sender, receiver } = req.body;
   try {
     let getMessages = await connection.queryAsync(
       "SELECT sender,receiver,message,time FROM message WHERE sender in (?,?) and receiver in (?,?)",
       [sender, receiver, sender, receiver]
     );
-    console.log("getMessages", getMessages);
+    // console.log("getMessages", getMessages);
     res.json({ status: "success", data: getMessages });
   } catch (err) {
     next(err);
