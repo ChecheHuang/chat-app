@@ -71,6 +71,7 @@ function Chat() {
       ...newMessage,
       socketId: receiver.socketId,
     })
+    setMessage('')
   }
   function handleChangeReceiver(item) {
     setReceiver(item)
