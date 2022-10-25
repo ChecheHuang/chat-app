@@ -2,147 +2,154 @@ $main : #FED801;
 
 @import "mixin.scss";
 
-*{
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
-body{
+
+body {
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    position: relative;
 }
-section {
+
+.bg {
+    width: 100vw;
+    height: 100vh;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100vh;
-    background: url(https://images.pexels.com/photos/3573603/pexels-photo-3573603.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
-    background-position-x: center;
-    background-size: cover;
-    animation: animateBg 50s linear infinite;
     z-index: -1;
+    overflow: hidden;
 
-    @keyframes animateBg {
+    section {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        background: url(https://images.pexels.com/photos/3573603/pexels-photo-3573603.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+        background-position-x: center;
+        background-size: cover;
+        animation: animateBg 50s linear infinite;
 
-        0%,
-        100% {
-            transform: scale(1);
-        }
+        @keyframes animateBg {
 
-        50% {
-            transform: scale(1.2);
-        }
-    }
-
-
-
-
-    span {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 4px;
-        height: 4px;
-        background: #fff;
-        border-radius: 50%;
-        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1),
-            0 0 0 4px rgba(255, 255, 255, 0.1),
-            0 0 20px rgba(255, 255, 255, 1);
-        animation: animate 3s linear infinite;
-
-        @keyframes animate {
-            0% {
-                transform: rotate(315deg)translateX(0);
-                opacity: 1;
-            }
-
-            70% {
-                opacity: 1;
-
-            }
-
+            0%,
             100% {
-                transform: rotate(315deg)translateX(-1000px);
-                opacity: 0;
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
             }
         }
 
-        &::before {
-            content: "";
+        span {
             position: absolute;
             top: 50%;
-            transform: translateY(-50%);
-            width: 300px;
-            height: 1px;
-            background: linear-gradient(90deg, #fff, transparent);
-        }
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1),
+                0 0 0 4px rgba(255, 255, 255, 0.1),
+                0 0 20px rgba(255, 255, 255, 1);
+            animation: animate 3s linear infinite;
 
-        &:nth-child(1) {
-            top: 0;
-            right: 0;
-            left: initial;
-            animation-delay: 0;
-            animation-duration: 1s;
-        }
+            @keyframes animate {
+                0% {
+                    transform: rotate(315deg)translateX(0);
+                    opacity: 1;
+                }
 
-        &:nth-child(2) {
-            top: 0;
-            right: 80px;
-            left: initial;
-            animation-delay: 0.2s;
-            animation-duration: 3s;
-        }
+                70% {
+                    opacity: 1;
 
-        &:nth-child(3) {
-            top: 80px;
-            right: 0px;
-            left: initial;
-            animation-delay: 0.4s;
-            animation-duration: 2s;
-        }
+                }
 
-        &:nth-child(4) {
-            top: 0px;
-            right: 180px;
-            left: initial;
-            animation-delay: 0.6s;
-            animation-duration: 1.5s;
-        }
+                100% {
+                    transform: rotate(315deg)translateX(-1000px);
+                    opacity: 0;
+                }
+            }
 
-        &:nth-child(5) {
-            top: 0px;
-            right: 800px;
-            left: initial;
-            animation-delay: 0.6s;
-            animation-duration: 1.3s;
-        }
+            &::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 300px;
+                height: 1px;
+                background: linear-gradient(90deg, #fff, transparent);
+            }
 
-        &:nth-child(6) {
-            top: 10px;
-            right: 700px;
-            left: initial;
-            animation-delay: 1s;
-            animation-duration: 1.8s;
-        }
+            &:nth-child(1) {
+                top: 0;
+                right: 0;
+                left: initial;
+                animation-delay: 0;
+                animation-duration: 1s;
+            }
 
-        &:nth-child(7) {
-            top: 30px;
-            right: 600px;
-            left: initial;
-            animation-delay: 1.5s;
-            animation-duration: 1.3s;
-        }
+            &:nth-child(2) {
+                top: 0;
+                right: 80px;
+                left: initial;
+                animation-delay: 0.2s;
+                animation-duration: 3s;
+            }
 
-        &:nth-child(8) {
-            top: 0px;
-            right: 300px;
-            left: initial;
-            animation-delay: .5s;
-            animation-duration: 1.3s;
+            &:nth-child(3) {
+                top: 80px;
+                right: 0px;
+                left: initial;
+                animation-delay: 0.4s;
+                animation-duration: 2s;
+            }
+
+            &:nth-child(4) {
+                top: 0px;
+                right: 180px;
+                left: initial;
+                animation-delay: 0.6s;
+                animation-duration: 1.5s;
+            }
+
+            &:nth-child(5) {
+                top: 0px;
+                right: 800px;
+                left: initial;
+                animation-delay: 0.6s;
+                animation-duration: 1.3s;
+            }
+
+            &:nth-child(6) {
+                top: 10px;
+                right: 700px;
+                left: initial;
+                animation-delay: 1s;
+                animation-duration: 1.8s;
+            }
+
+            &:nth-child(7) {
+                top: 30px;
+                right: 600px;
+                left: initial;
+                animation-delay: 1.5s;
+                animation-duration: 1.3s;
+            }
+
+            &:nth-child(8) {
+                top: 0px;
+                right: 300px;
+                left: initial;
+                animation-delay: .5s;
+                animation-duration: 1.3s;
+            }
         }
     }
 

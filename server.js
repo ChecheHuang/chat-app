@@ -13,10 +13,11 @@ app.use(express.static(path.join(__dirname, "/public")));
 const io = require("socket.io")(http, {
   cors: {
     origin: "http://cheche.ga:3000",
+    // origin: "http://localhost:3000",
   },
 });
-const socket =require('./controller/messagesController')
-socket.socket(io)
+const socket = require("./controller/messagesController");
+socket.socket(io);
 
 app.post("/webhook", function (req, res) {
   const exec = require("child_process").exec;
@@ -31,7 +32,6 @@ app.post("/webhook", function (req, res) {
   res.send("webhook");
 });
 
-
 let apiRouter = require("./routes/api");
 app.use("/api", apiRouter);
 
@@ -45,6 +45,7 @@ app.use(function (err, req, res, next) {
   res.send("500 - Internal Sever Error 請洽系統管理員");
 });
 
+// const port = process.env.PORT || 8080;
 const port = process.env.PORT || 80;
 
 http.listen(port, async function () {

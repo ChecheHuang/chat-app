@@ -6,16 +6,19 @@ import Chat from './page/Chat/Chat'
 function App() {
   return (
     <Router>
-      <section>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </section>
+      <div className="bg">
+        <section>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </section>
+      </div>
+
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/chat" element={<Chat />} />

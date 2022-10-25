@@ -29,6 +29,7 @@ function Chat() {
       navigate(-1)
     }
     setSocket(io(ws))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   useEffect(() => {
     socket?.emit('addUser', user)
@@ -43,6 +44,7 @@ function Chat() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket])
   useEffect(() => {
+    if (JSON.stringify(receiver) === '{}') return
     ;(async function () {
       const data = {
         sender: user,
@@ -57,7 +59,9 @@ function Chat() {
   function handleChangeMessage(e) {
     setMessage(e.target.value)
   }
-  async function handleSendMessage() {
+  async function handleSendMessage(e) {
+    e.preventDefault()
+
     if (message === '') return
     const newMessage = {
       sender: user,
@@ -123,13 +127,16 @@ function Chat() {
             <div>請先選擇聊天對象</div>
           ) : (
             <>
-              {' '}
-              <textarea
-                value={message}
-                onChange={handleChangeMessage}
-                type="text"
-              />
-              <button onClick={handleSendMessage}>送出</button>
+              <form>
+                <input
+                  value={message}
+                  onChange={handleChangeMessage}
+                  type="text"
+                />
+                <button type="submit" onClick={handleSendMessage}>
+                  送出
+                </button>
+              </form>
             </>
           )}
         </div>

@@ -45,7 +45,7 @@ function HomePage() {
       dispatch(updateStart())
       const result = await axios.post(registerRoute, registerInfo)
       if (result.data.status === 'success') {
-        console.log(result.data.data)
+        // console.log(result.data.data)
         setTimeout(() => {
           dispatch(updateSuccess(result.data.data.userName))
           toast.success('註冊成功', toastOption)
@@ -69,7 +69,7 @@ function HomePage() {
     if (!handleLoginValid()) return
 
     const loginResult = await axios.post(loginRoute, loginInfo)
-    console.log(loginResult.data.status)
+    // console.log(loginResult.data.status)
     if (loginResult.data.status === 'error') {
       toast.error('登入失敗', toastOption)
       return
