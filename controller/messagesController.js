@@ -1,7 +1,7 @@
 const connection = require("../utils/db");
 
-let users = [{socketId:"123",user:"Carl"},{socketId:"1234",user:"Allen"}];
-// let users = [];
+// let users = [{socketId:"123",user:"Carl"},{socketId:"1234",user:"Allen"}];
+let users = [];
 const addUser = (user, socketId) => {
   !users.some((user) => user.user === user) && users.push({ user, socketId });
 };
