@@ -18,8 +18,18 @@ const io = require("socket.io")(http, {
 const socket =require('./controller/messagesController')
 socket.socket(io)
 
-
-
+app.post("/webhook", function (req, res) {
+  const exec = require("child_process").exec;
+  var yourscript = exec("sh webhook.sh", (error, stdout, stderr) => {
+    console.log(`${stdout}`);
+    console.log(`${stderr}`);
+    if (error !== null) {
+      console.log(`exec error: ${error}`);
+    }
+  });
+  console.log("被打ㄌ");
+  res.send("webhook");
+});
 
 
 let apiRouter = require("./routes/api");
