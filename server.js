@@ -35,7 +35,7 @@ app.use(function (err, req, res, next) {
   res.send("500 - Internal Sever Error 請洽系統管理員");
 });
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 
 http.listen(port, async function () {
   await connection.connectAsync();
