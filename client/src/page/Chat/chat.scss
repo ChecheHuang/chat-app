@@ -4,9 +4,12 @@
 .chat {
     // background: #000;
     width: 900px;
-    height: 600px;
+    height: 500px;
     position: relative;
     display: flex;
+    @include ipad(){
+        flex-direction: column;
+    }
 
     &::before {
         content: "";
@@ -44,6 +47,13 @@
 
     .messageArea {
         flex: 9;
+        &.select{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
 
         .header {
             height: 50px;
@@ -63,7 +73,6 @@
         }
 
         .conversation {
-            // background: yellow;
             height: calc(100% - 150px);
             padding: 5px;
             @include scrollBarStyle();

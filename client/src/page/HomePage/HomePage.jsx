@@ -28,12 +28,12 @@ const toastOption = {
 function HomePage() {
   const [isLoginStatus, setIsLoginStatus] = useState(true)
   const [registerInfo, setRegisterInfo] = useState({
-    userName: 'test',
+    userName: 'Carl',
     password: '123',
     confirmPassword: '123',
   })
   const [loginInfo, setLoginInfo] = useState({
-    userName: 'test',
+    userName: 'Carl',
     password: '123',
   })
   const navigate = useNavigate()
@@ -74,6 +74,7 @@ function HomePage() {
       toast.error('登入失敗', toastOption)
       return
     }
+    dispatch(updateSuccess(loginInfo.userName))
     navigate('/chat')
   }
   function handleLoginValid() {

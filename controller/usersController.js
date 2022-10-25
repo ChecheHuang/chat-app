@@ -18,7 +18,7 @@ module.exports.register = async (req, res, next) => {
 };
 
 module.exports.login = async (req, res, next) => {
-  console.log(req.body);
+  // console.log('login',req.body);
   const { userName, password } = req.body;
   try {
     const result = await connection.queryAsync(
@@ -35,7 +35,7 @@ module.exports.login = async (req, res, next) => {
       return;
     }
     res.json({ status: "success" });
-    console.log(realPassword);
+    console.log("realPassword",realPassword);
   } catch (err) {
     next(err);
   }

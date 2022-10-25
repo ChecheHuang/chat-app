@@ -8,7 +8,7 @@ router.post("/login", login);
 router.post("/logout", logout);
 
 
-router.post("/sendMessage", sendMessage)
+// router.post("/sendMessage", sendMessage)
 router.post("/getMessages", getMessages)
 
 module.exports = router;
