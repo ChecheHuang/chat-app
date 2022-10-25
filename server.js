@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 const io = require("socket.io")(http, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "http://cheche.ga:3000",
   },
 });
 const socket =require('./controller/messagesController')
