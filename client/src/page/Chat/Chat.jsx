@@ -94,42 +94,45 @@ function Chat() {
           )
         })}
       </div>
-      {JSON.stringify(receiver) === '{}' ? (
-        <div className="messageArea select">選擇聊天對象</div>
-      ) : (
-        <div className="messageArea">
-          <div className="header">
-            <div className="name">{user}</div>
-            <a href="./">登出</a>
-          </div>
-          <div id="conversation" className="conversation">
-            {messages.map((item, index) => {
-              const { sender, message, time } = item
-              return (
-                <div
-                  key={index}
-                  className={
-                    sender === user ? 'messageGroup own' : 'messageGroup'
-                  }
-                >
-                  <div className="name">
-                    {sender} <span>{time}</span>
-                  </div>
-                  <div className="message">{message}</div>
-                </div>
-              )
-            })}
-          </div>
-          <div className="sendMessageArea">
-            <textarea
-              value={message}
-              onChange={handleChangeMessage}
-              type="text"
-            />
-            <button onClick={handleSendMessage}>送出</button>
-          </div>
+      <div className="messageArea">
+        <div className="header">
+          <div className="name">{user}</div>
+          <a href="./">登出</a>
         </div>
-      )}
+        <div id="conversation" className="conversation">
+          {messages.map((item, index) => {
+            const { sender, message, time } = item
+            return (
+              <div
+                key={index}
+                className={
+                  sender === user ? 'messageGroup own' : 'messageGroup'
+                }
+              >
+                <div className="name">
+                  {sender} <span>{time}</span>
+                </div>
+                <div className="message">{message}</div>
+              </div>
+            )
+          })}
+        </div>
+        <div className="sendMessageArea">
+          {JSON.stringify(receiver) === '{}' ? (
+            <div>請先選擇聊天對象</div>
+          ) : (
+            <>
+              {' '}
+              <textarea
+                value={message}
+                onChange={handleChangeMessage}
+                type="text"
+              />
+              <button onClick={handleSendMessage}>送出</button>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
