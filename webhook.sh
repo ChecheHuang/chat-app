@@ -13,7 +13,7 @@ if [ -d "$gitPath" ]; then
                 rm -rf gittemp
         fi
         #拉取項目最新文件
-        git reset --hard origin/master
+        #git reset --hard origin/master
         git pull 
         echo "End"
         exit
