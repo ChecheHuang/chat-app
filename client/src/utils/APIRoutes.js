@@ -1,6 +1,6 @@
 const production = process.env.REACT_APP_PRODUCTION === 'true'
 const domain = production ? 'localhost' : 'cheche.ga'
-const port = production ? '3000' : '80'
+const port = production ? '8080' : '80'
 const host = `http://${domain}:${port}`
 export const registerRoute = `${host}/api/register`
 export const loginRoute = `${host}/api/login`

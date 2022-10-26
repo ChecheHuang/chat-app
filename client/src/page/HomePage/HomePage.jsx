@@ -122,7 +122,7 @@ function HomePage() {
   }
   return (
     <>
-      <div className="container">
+      <div className="container" style={{ height: `${window.innerHeight}px` }}>
         <div className={isLoginStatus ? 'login active' : 'login'}>
           <h1>歡迎加入聊天</h1>
           <h2>Login</h2>

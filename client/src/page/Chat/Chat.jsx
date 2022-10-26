@@ -84,7 +84,7 @@ function Chat() {
   }
 
   return (
-    <div className="chat">
+    <div className="chat" style={{ height: `${window.innerHeight}px` }}>
       <div className="userList">
         {userList.map((item, index) => {
           const { user, socketId } = item
