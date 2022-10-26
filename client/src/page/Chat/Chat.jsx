@@ -37,6 +37,8 @@ function Chat() {
       setUserList(users.filter((item) => item.user !== user))
     })
     socket?.on('getMessage', (item) => {
+      console.log(item)
+      if (item.sender !== receiver) return
       setMessages((prev) => {
         return [...prev, item]
       })
@@ -85,13 +87,16 @@ function Chat() {
     <div className="chat">
       <div className="userList">
         {userList.map((item, index) => {
-          const { user } = item
+          const { user, socketId } = item
+          const className = socketId === '' ? '' : 'online '
           return (
             <div
               onClick={() => {
                 handleChangeReceiver(item)
               }}
-              className={user === receiver.user ? 'active' : ''}
+              className={
+                user === receiver.user ? `${className}+ active` : className
+              }
               key={index}
             >
               {user}

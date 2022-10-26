@@ -62,20 +62,24 @@ function HomePage() {
         }, 1000)
       }
     } catch (err) {
+      toast.error('連線失敗', toastOption)
       dispatch(updateError())
     }
   }
   const handleLogin = async () => {
     if (!handleLoginValid()) return
-
-    const loginResult = await axios.post(loginRoute, loginInfo)
-    // console.log(loginResult.data.status)
-    if (loginResult.data.status === 'error') {
-      toast.error('登入失敗', toastOption)
-      return
+    try {
+      const loginResult = await axios.post(loginRoute, loginInfo)
+      // console.log(loginResult.data.status)
+      if (loginResult.data.status === 'error') {
+        toast.error('登入失敗', toastOption)
+        return
+      }
+      dispatch(updateSuccess(loginInfo.userName))
+      navigate('/chat')
+    } catch (err) {
+      toast.error('連線失敗', toastOption)
     }
-    dispatch(updateSuccess(loginInfo.userName))
-    navigate('/chat')
   }
   function handleLoginValid() {
     return true

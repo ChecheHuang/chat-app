@@ -1,9 +1,16 @@
 const connection = require("../utils/db");
 
-// let users = [{socketId:"123",user:"Carl"},{socketId:"1234",user:"Allen"}];
+// let users = [{user:"Carl",socketId:""},{user:"31",socketId:""}];
 let users = [];
-const addUser = (user, socketId) => {
-  !users.some((user) => user.user === user) && users.push({ user, socketId });
+const addUser = async(user, socketId) => {
+  const index = users.findIndex((item)=>item.user===user)
+  if(index!==-1){
+    users[index].socketId=socketId
+    return
+  }else{
+   await selectAllUsers()
+   addUser(user,socketId)
+  }
 };
 const insertMessage = async (sender, receiver, message) => {
   try {
@@ -15,12 +22,30 @@ const insertMessage = async (sender, receiver, message) => {
     console.log(err);
   }
 };
+const selectAllUsers = async () => {
+  try {
+    const result = await connection.queryAsync(
+      "SELECT userName FROM `users`"
+    );
+    for(let i of result){
+      const isset = users.some((user)=>user.user===i.userName)
+      !isset&&users.push({user:i.userName,socketId:""})
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
 const removeUser = (socketId) => {
-  users = users.filter((user) => user.socketId !== socketId);
+  const index = users.findIndex((item)=>item.socketId===socketId)
+  if(index!==-1){
+    users[index].socketId=""
+    return
+  }
 };
 module.exports.socket = function (io) {
   io.on("connection", (socket) => {
     console.log("a user connected  " + socket.id);
+    selectAllUsers()
     socket.on("addUser", (user) => {
       addUser(user, socket.id);
       io.emit("getUsers", users);
