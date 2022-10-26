@@ -47,7 +47,7 @@ app.use(function (err, req, res, next) {
 });
  
 
-const port = process.env.PRODUCTION==='true' ? "8080": "80";
+const port = 8080
 
 http.listen(port, async function () {
   await connection.connectAsync();
