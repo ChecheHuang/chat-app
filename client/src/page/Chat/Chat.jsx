@@ -37,12 +37,9 @@ function Chat() {
       setUserList(users.filter((item) => item.user !== user))
     })
     socket?.on('getMessage', (item) => {
-      console.log(item)
-      console.log('item.sender', item.sender)
-      console.log('receiver', receiver)
-       setMessages((prev) => {
-         return [...prev, item]
-       })
+      setMessages((prev) => {
+        return [...prev, item]
+      })
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket])
@@ -80,9 +77,6 @@ function Chat() {
     })
     setMessage('')
   }
-  function handleChangeReceiver(item) {
-    setReceiver(item)
-  }
 
   return (
     <div className="chat">
@@ -93,7 +87,7 @@ function Chat() {
           return (
             <div
               onClick={() => {
-                handleChangeReceiver(item)
+                setReceiver({ user, socketId })
               }}
               className={
                 user === receiver.user ? `${className}+ active` : className
@@ -111,22 +105,23 @@ function Chat() {
           <a href="./">登出</a>
         </div>
         <div id="conversation" className="conversation">
-          {messages.map((item, index) => {
-            const { sender, message, time } = item
-            return (
-              <div
-                key={index}
-                className={
-                  sender === user ? 'messageGroup own' : 'messageGroup'
-                }
-              >
-                <div className="name">
-                  {sender} <span>{time}</span>
+          {JSON.stringify(receiver) !== '{}' &&
+            messages.map((item, index) => {
+              const { sender, message, time } = item
+              return (
+                <div
+                  key={index}
+                  className={
+                    sender === user ? 'messageGroup own' : 'messageGroup'
+                  }
+                >
+                  <div className="name">
+                    {sender} <span>{time}</span>
+                  </div>
+                  <div className="message">{message}</div>
                 </div>
-                <div className="message">{message}</div>
-              </div>
-            )
-          })}
+              )
+            })}
         </div>
         <div className="sendMessageArea">
           {JSON.stringify(receiver) === '{}' ? (
