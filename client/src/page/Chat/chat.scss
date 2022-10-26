@@ -102,9 +102,12 @@
         }
 
         .conversation {
-            height: calc(78vh - 150px);
+            height: calc(100% - 150px);
             padding: 5px;
             @include scrollBarStyle();
+            @include ipad(){
+            height: calc(78vh - 150px);
+            }
 
             .messageGroup {
                 background: rgba(255, 255, 255, .8);

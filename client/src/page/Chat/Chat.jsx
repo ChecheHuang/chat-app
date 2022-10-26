@@ -26,7 +26,7 @@ function Chat() {
 
   useEffect(() => {
     if (user === '') {
-      navigate(-1)
+      navigate('/')
     }
     setSocket(io(ws))
     // eslint-disable-next-line react-hooks/exhaustive-deps
