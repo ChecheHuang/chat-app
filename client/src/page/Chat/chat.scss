@@ -102,7 +102,7 @@
         }
 
         .conversation {
-            height: calc(100% - 150px);
+            height: calc(78vh - 150px);
             padding: 5px;
             @include scrollBarStyle();
 
