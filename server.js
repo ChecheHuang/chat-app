@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 const io = require("socket.io")(http, {
   cors: {
-    origin:process.env.PRODUCTION? "http://localhost:3000":"http://cheche.ga:8080",
+    origin:process.env.PRODUCTION? "http://localhost:3000":"http://cheche.ga:80",
   },
 });
 const socket = require("./controller/messagesController");
@@ -46,7 +46,7 @@ app.use(function (err, req, res, next) {
   res.send("500 - Internal Sever Error 請洽系統管理員");
 });
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 80;
 
 http.listen(port, async function () {
   await connection.connectAsync();
