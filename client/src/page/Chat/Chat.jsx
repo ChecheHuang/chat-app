@@ -38,10 +38,11 @@ function Chat() {
     })
     socket?.on('getMessage', (item) => {
       console.log(item)
-      if (item.sender !== receiver) return
-      setMessages((prev) => {
-        return [...prev, item]
-      })
+      if (item.sender === receiver) {
+        setMessages((prev) => {
+          return [...prev, item]
+        })
+      }
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket])
