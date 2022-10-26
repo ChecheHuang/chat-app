@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 const io = require("socket.io")(http, {
   cors: {
-    origin:process.env.PRODUCTION? "http://localhost:3000":"http://cheche.ga:8080",
+    origin:process.env.PRODUCTION? "http://localhost:3000":"http://cheche.ga:80",
   },
 });
 const socket = require("./controller/messagesController");
