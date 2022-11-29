@@ -43,6 +43,7 @@ function HomePage() {
     if (!handleValid()) return
     try {
       dispatch(updateStart())
+
       const result = await axios.post(registerRoute, registerInfo)
       if (result.data.status === 'success') {
         // console.log(result.data.data)

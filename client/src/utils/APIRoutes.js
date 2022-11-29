@@ -1,4 +1,4 @@
-const production = process.env.REACT_APP_PRODUCTION === 'true'
+const production = process.env.REACT_APP_PRODUCTION === 'false'
 const domain = production ? 'localhost' : 'cheche.ga'
 const port = production ? '8080' : '80'
 const host = `http://${domain}:${port}`

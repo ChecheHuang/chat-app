@@ -1,5 +1,3 @@
-
-
 const connection = require("./utils/db");
 require("dotenv").config();
 const express = require("express");
@@ -14,7 +12,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 const io = require("socket.io")(http, {
   cors: {
-    origin:"http://localhost:3000",
+    origin: "http://localhost:3000",
   },
 });
 const socket = require("./controller/messagesController");
@@ -22,14 +20,13 @@ socket.socket(io);
 
 app.post("/webhook", function (req, res) {
   const exec = require("child_process").exec;
-  var yourscript = exec("sh webhook.sh", (error, stdout, stderr) => {
+  exec("sh webhook.sh", (error, stdout, stderr) => {
     console.log(`${stdout}`);
     console.log(`${stderr}`);
     if (error !== null) {
       console.log(`exec error: ${error}`);
     }
   });
-  console.log("被打ㄌ");
   res.send("webhook");
 });
 
@@ -45,9 +42,8 @@ app.use(function (err, req, res, next) {
   res.status(500);
   res.send("500 - Internal Sever Error 請洽系統管理員");
 });
- 
 
-const port = process.env.PRODUCTION==='true' ? "8080": "80";
+const port = process.env.PRODUCTION === "false" ? "8080" : "80";
 
 http.listen(port, async function () {
   await connection.connectAsync();
